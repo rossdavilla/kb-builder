@@ -303,7 +303,7 @@
   // ---------- Demo videos ----------
   // One curated YouTube demo per exercise (video id). Exercises without one fall back to
   // a YouTube search for the move.
-  // Verified 2026-10-15. Bear Hug Carry has no good kettlebell demo, so it uses search.
+  // Verified 2026-10-15. Bear Hug Carry uses a sandbag demo; the hold is the same with a bell.
   var VIDEOS = {
     "Kettlebell Deadlift": "PrELOSH4E5s",
     "Kettlebell Sumo Deadlift": "FpeXq8U6KdA",
@@ -378,6 +378,7 @@
     "Kettlebell Toe Touch": "6ThbhJ2yi6E",
     "Double Kettlebell Strict Press": "tLQt4ccmPQ4",
     "Two-Handed Kettlebell Row": "mG8UOxszXQ8",
+    "Bear Hug Carry": "QQ0beWNWnGQ",
     "Kettlebell Dead Bug Hold": "iY5ys5BqzH8",
     "Dead-Stop Swing": "hUj6HluTYfU",
     "Kettlebell Squat Clean": "yK-s3HEe3A0",
