@@ -2,3 +2,6 @@
 .claude/
 # Saved copy of the original Kettlebell Flow site, kept locally for reference only.
 reference/
+
+# Working files for making the exercise images in ChatGPT.
+image-prompts/
