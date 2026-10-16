@@ -19,6 +19,7 @@
     roundsCompleted: 0
   };
   state.expandedIndex = null;
+  state.guideIndex = null; // which card's full form guide is showing, if any
 
   function saveSessionState(){
     try {
@@ -133,6 +134,7 @@
     el.workoutCount.textContent = state.exercises.length ? state.exercises.length + ' moves' : '';
     state.exercises.forEach(function(ex, index){
       var open = state.expandedIndex === index;
+      var guideOpen = open && state.guideIndex === index;
       var item = document.createElement('div');
       item.className = 'ex' + (open ? ' open' : '') + (flashIndex === index ? ' flash' : '');
       item.innerHTML =
@@ -153,13 +155,30 @@
           KB.videoHtml(ex) +
           '<div class="link-row">' +
             KB.videoLinkHtml(ex) +
-            '<a class="link-btn guide-link" href="library.html#' + KB.slugify(ex.name) + '">Full form guide →</a>' +
+            '<button class="link-btn guide-link" aria-expanded="' + guideOpen + '">' + (guideOpen ? 'Hide form guide' : 'Full form guide') + '</button>' +
           '</div>' +
+          (guideOpen
+            ? '<div class="form-guide">' + KB.formGuideHtml(ex) +
+                '<button class="link-btn hide-guide">Hide form guide</button></div>'
+            : '') +
         '</div>';
       item.querySelector('.ex-head').addEventListener('click', function(){
         state.expandedIndex = open ? null : index;
+        state.guideIndex = null; // the guide only stays open for the card it was opened on
         renderExercises();
       });
+      item.querySelector('.guide-link').addEventListener('click', function(){
+        state.guideIndex = guideOpen ? null : index;
+        renderExercises();
+      });
+      if (guideOpen){
+        item.querySelector('.hide-guide').addEventListener('click', function(){
+          state.guideIndex = null;
+          renderExercises();
+          // The guide is long; bring the card back into view once it collapses.
+          el.exerciseList.children[index].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+      }
       item.querySelector('.swap-icon').addEventListener('click', function(){ swapExercise(index); });
       el.exerciseList.appendChild(item);
     });
@@ -171,6 +190,7 @@
     state.recentFlows.push(state.exercises.map(function(e){ return e.name; }));
     state.recentFlows = state.recentFlows.slice(-2);
     state.expandedIndex = null;
+    state.guideIndex = null;
     state.roundsCompleted = 0;
     renderExercises();
     renderRoundTracker();
@@ -199,6 +219,7 @@
     }
     state.exercises[index] = replacement;
     if (state.expandedIndex === index) state.expandedIndex = null;
+    if (state.guideIndex === index) state.guideIndex = null;
     renderExercises(index);
     saveSessionState();
     vibrate(20);

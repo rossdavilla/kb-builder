@@ -40,12 +40,6 @@
     });
   }
 
-  function listHtml(items, className){
-    return '<' + (className === 'mistakes' ? 'ul' : 'ol') + '>' +
-      items.map(function(s){ return '<li>' + KB.escapeHtml(s) + '</li>'; }).join('') +
-      '</' + (className === 'mistakes' ? 'ul' : 'ol') + '>';
-  }
-
   function renderList(){
     var found = matches();
     el.title.textContent = state.filter === 'All' ? 'All Moves' : state.filter;
@@ -72,9 +66,7 @@
         '<div class="ex-body">' +
           '<p class="ex-desc">' + KB.escapeHtml(ex.description) + '</p>' +
           KB.videoHtml(ex) +
-          '<div class="cue"><div class="cue-label">Setup</div><p>' + KB.escapeHtml(ex.setup) + '</p></div>' +
-          '<div class="cue"><div class="cue-label">How to do it</div>' + listHtml(ex.steps) + '</div>' +
-          '<div class="cue mistakes"><div class="cue-label">Common mistakes</div>' + listHtml(ex.mistakes, 'mistakes') + '</div>' +
+          KB.formGuideHtml(ex) +
           '<div class="link-row">' + KB.videoLinkHtml(ex) + '</div>' +
         '</div>';
       item.querySelector('.ex-head').addEventListener('click', function(){

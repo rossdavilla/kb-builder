@@ -103,6 +103,9 @@ a{ color:var(--link); }
 .link-btn.video-link{ background:var(--accent-soft); color:var(--accent-dark); }
 .link-btn.guide-link{ background:var(--link-soft); color:var(--link); }
 .link-btn.swap{ background:var(--chip); color:var(--fg); border-color:var(--border); }
+.link-btn.guide-link[aria-expanded="true"]{ background:var(--chip); color:var(--fg); border-color:var(--border); }
+.form-guide{ margin-top:16px; padding:2px 16px 16px; border-radius:12px; background:var(--bg); border:1px solid var(--border); }
+.link-btn.hide-guide{ width:100%; margin-top:18px; background:var(--card); color:var(--fg); border-color:var(--border); }
 
 /* ---------- Form cues (library) ---------- */
 .cue{ margin-top:16px; }

@@ -457,6 +457,15 @@
     return '<a class="link-btn video-link" href="' + videoUrl(exercise) + '" target="_blank" rel="noopener">' +
       '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7L8 5Z" fill="currentColor"/></svg>' + label + '</a>';
   }
+  // Setup, steps, and common mistakes for a move (the "full form guide").
+  function formGuideHtml(exercise){
+    var list = function(items, tag){
+      return '<' + tag + '>' + items.map(function(s){ return '<li>' + escapeHtml(s) + '</li>'; }).join('') + '</' + tag + '>';
+    };
+    return '<div class="cue"><div class="cue-label">Setup</div><p>' + escapeHtml(exercise.setup) + '</p></div>' +
+      '<div class="cue"><div class="cue-label">How to do it</div>' + list(exercise.steps, 'ol') + '</div>' +
+      '<div class="cue mistakes"><div class="cue-label">Common mistakes</div>' + list(exercise.mistakes, 'ul') + '</div>';
+  }
 
   window.KB = {
     LEVELS: LEVELS, CATEGORIES: CATEGORIES, EXERCISES: EXERCISES, VIDEOS: VIDEOS,
@@ -464,6 +473,6 @@
     repetitionTarget: repetitionTarget, findExerciseByName: findExerciseByName,
     slugify: slugify, videoUrl: videoUrl, thumbnailUrl: thumbnailUrl, diagramUrl: diagramUrl, diagramFallback: diagramFallback,
     escapeHtml: escapeHtml, metaText: metaText, thumbHtml: thumbHtml, videoHtml: videoHtml,
-    videoLinkHtml: videoLinkHtml, CHEVRON: CHEVRON
+    videoLinkHtml: videoLinkHtml, formGuideHtml: formGuideHtml, CHEVRON: CHEVRON
   };
 })();
