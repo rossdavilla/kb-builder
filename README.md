@@ -2,7 +2,7 @@
 
 A simple kettlebell workout builder: pick your equipment, level, and categories, generate a workout, then track your rounds. Every exercise links to a demo video, and the Movement Library has setup, steps, and common mistakes for all 82 moves.
 
-Live site: https://rossdavilla.github.io/kb-builder/
+Live site: https://rossdavilla.github.io/kettlebell/
 
 - `index.html` builds the workout and tracks rounds
 - `library.html` is the movement library (link to one move with `library.html#<move-slug>`)
