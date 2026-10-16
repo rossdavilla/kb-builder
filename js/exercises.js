@@ -415,15 +415,36 @@
   var CHEVRON = '<svg class="ex-chev" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var PLAY = '<svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7L8 5Z" fill="#fff"/></svg>';
   var KB_ICON = '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="7" y="2.5" width="10" height="8.5" rx="4.2" stroke="#8A919E" stroke-width="2"/><circle cx="12" cy="15.5" r="6.3" fill="#8A919E"/></svg>';
+  // Hand-made start/end diagrams live at images/moves/<slug>.png (3:2). Cards try the diagram
+  // first; when the file doesn't exist the <img> errors and diagramFallback() swaps in the
+  // YouTube preview instead, so new diagrams show up just by adding the file.
+  function diagramUrl(exercise){ return 'images/moves/' + slugify(exercise.name) + '.png'; }
+  function diagramFallback(img, kind){
+    var wrap = img.closest('[data-ex]');
+    var exercise = findExerciseByName(wrap.getAttribute('data-ex'));
+    if (kind === 'thumb'){
+      var src = thumbnailUrl(exercise, 'mqdefault');
+      wrap.classList.remove('diagram');
+      if (src){ img.onerror = null; img.src = src; }
+      else { img.remove(); wrap.classList.add('empty'); wrap.insertAdjacentHTML('afterbegin', KB_ICON); }
+    } else {
+      wrap.outerHTML = videoPreviewHtml(exercise);
+    }
+  }
   // Small thumbnail for a list row. `badge` is optional (e.g. the exercise's position in a workout).
   function thumbHtml(exercise, badge){
-    var src = thumbnailUrl(exercise, 'mqdefault');
     var num = badge ? '<span class="ex-num">' + badge + '</span>' : '';
-    if (!src) return '<span class="ex-thumb empty">' + KB_ICON + num + '</span>';
-    return '<span class="ex-thumb"><img src="' + src + '" alt="" loading="lazy">' + num + '</span>';
+    return '<span class="ex-thumb diagram" data-ex="' + escapeHtml(exercise.name) + '">' +
+      '<img src="' + diagramUrl(exercise) + '" alt="" loading="lazy" onerror="KB.diagramFallback(this, \'thumb\')">' + num + '</span>';
   }
-  // Large tappable video preview for an expanded card.
+  // Main image for an expanded card: the start/end diagram, or the video preview if there isn't one.
   function videoHtml(exercise){
+    return '<figure class="diagram-full" data-ex="' + escapeHtml(exercise.name) + '">' +
+      '<img src="' + diagramUrl(exercise) + '" alt="' + escapeHtml(exercise.name) + ': start and end positions" loading="lazy" onerror="KB.diagramFallback(this, \'full\')">' +
+      '<figcaption class="video-caption">Start and end positions</figcaption></figure>';
+  }
+  // Large tappable video preview.
+  function videoPreviewHtml(exercise){
     var src = thumbnailUrl(exercise, 'hqdefault');
     if (!src) return '';
     return '<a class="video" href="' + videoUrl(exercise) + '" target="_blank" rel="noopener" aria-label="Watch a demo of ' + escapeHtml(exercise.name) + '">' +
@@ -441,7 +462,7 @@
     LEVELS: LEVELS, CATEGORIES: CATEGORIES, EXERCISES: EXERCISES, VIDEOS: VIDEOS,
     pickExercises: pickExercises, pickForCategory: pickForCategory, isBallistic: isBallistic,
     repetitionTarget: repetitionTarget, findExerciseByName: findExerciseByName,
-    slugify: slugify, videoUrl: videoUrl, thumbnailUrl: thumbnailUrl,
+    slugify: slugify, videoUrl: videoUrl, thumbnailUrl: thumbnailUrl, diagramUrl: diagramUrl, diagramFallback: diagramFallback,
     escapeHtml: escapeHtml, metaText: metaText, thumbHtml: thumbHtml, videoHtml: videoHtml,
     videoLinkHtml: videoLinkHtml, CHEVRON: CHEVRON
   };

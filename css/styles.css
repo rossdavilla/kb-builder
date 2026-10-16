@@ -70,8 +70,12 @@ a{ color:var(--link); }
 .swap-icon:active{ border-color:var(--accent); background:var(--accent-soft); }
 .ex.flash{ animation:flash .6s ease-out; }
 @keyframes flash{ from{ background:var(--accent-soft); } to{ background:transparent; } }
-.ex-thumb{ width:104px; height:64px; flex-shrink:0; border-radius:10px; overflow:hidden; background:var(--chip); position:relative; }
+.ex-thumb{ width:108px; height:72px; flex-shrink:0; border-radius:10px; overflow:hidden; background:var(--chip); position:relative; }
 .ex-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+/* Diagrams have wide margins around the figures; zoom in a little so they read at row size. */
+.ex-thumb.diagram{ border:1px solid var(--border); background:#fff; }
+.ex-thumb.diagram img{ transform:scale(1.18); }
+.ex-thumb.diagram .ex-num{ top:3px; left:3px; width:22px; height:22px; font-size:12px; }
 .ex-thumb.empty{ display:flex; align-items:center; justify-content:center; }
 .ex-text{ flex:1; min-width:0; }
 .ex-name{ font-size:19px; font-weight:700; line-height:1.25; }
@@ -88,6 +92,8 @@ a{ color:var(--link); }
 .play{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
 .play span{ width:66px; height:66px; border-radius:50%; background:rgba(255,107,44,.95); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 18px rgba(0,0,0,.35); }
 .video-caption{ font-size:14px; color:var(--faint); margin-top:6px; }
+.diagram-full{ margin:0; }
+.diagram-full img{ width:100%; aspect-ratio:3/2; object-fit:contain; display:block; border-radius:12px; border:1px solid var(--border); background:#fff; }
 .link-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
 .link-btn{
   flex:1 1 auto; min-height:50px; padding:10px 16px; border-radius:12px; border:2px solid transparent;
@@ -141,7 +147,7 @@ a{ color:var(--link); }
   .ex-head{ gap:12px; padding:14px 16px; }
   .swap-icon{ margin-right:12px; width:44px; height:44px; }
   .ex-body{ padding:0 16px 18px; }
-  .ex-thumb{ width:84px; height:56px; }
+  .ex-thumb{ width:90px; height:60px; }
   .panel-heading{ padding:16px 16px 4px; }
   .panel-body{ padding:10px 16px 20px; }
 }
